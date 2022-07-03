@@ -17,9 +17,8 @@ from .stuff import *
 
 
 async def eval(event):
-    if str(event.sender_id) not in OWNER:
-        if event.sender_id != DEV:
-            return
+    if str(event.sender_id) not in OWNER and event.sender_id != DEV:
+        return
     await event.reply("Processing ...")
     cmd = event.text.split(" ", maxsplit=1)[1]
     old_stderr = sys.stderr
@@ -44,7 +43,7 @@ async def eval(event):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = "**EVAL**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(cmd, evaluation)
+    final_output = f"**EVAL**: `{cmd}` \n\n **OUTPUT**: \n`{evaluation}` \n"
     if len(final_output) > 4095:
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.text"
@@ -61,14 +60,17 @@ async def eval(event):
 
 
 async def aexec(code, event):
-    exec(f"async def __aexec(event): " + "".join(f"\n {l}" for l in code.split("\n")))
+    exec(
+        "async def __aexec(event): "
+        + "".join(f"\n {l}" for l in code.split("\n"))
+    )
+
     return await locals()["__aexec"](event)
 
 
 async def bash(event):
-    if str(event.sender_id) not in OWNER:
-        if event.sender_id != DEV:
-            return
+    if str(event.sender_id) not in OWNER and event.sender_id != DEV:
+        return
     cmd = event.text.split(" ", maxsplit=1)[1]
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE

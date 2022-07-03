@@ -97,7 +97,7 @@ async def _(e):
 
 
 async def something():
-    for i in itertools.count():
+    for _ in itertools.count():
         try:
             if not WORKING and QUEUE:
                 user = int(OWNER.split()[0])
@@ -111,7 +111,7 @@ async def something():
                     else:
                         dl, file = QUEUE[list(QUEUE.keys())[0]]
                         tt = time.time()
-                        dl = "downloads/" + dl
+                        dl = f"downloads/{dl}"
                         with open(dl, "wb") as f:
                             ok = await download_file(
                                 client=bot,

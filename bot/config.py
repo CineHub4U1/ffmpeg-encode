@@ -31,5 +31,5 @@ try:
 except Exception as e:
     print("Environment vars Missing")
     print("something went wrong")
-    print(str(e))
+    print(e)
     exit()
