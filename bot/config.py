@@ -16,17 +16,17 @@
 from decouple import config
 
 try:
-    APP_ID = config("APP_ID", cast=int)
-    API_HASH = config("API_HASH")
-    BOT_TOKEN = config("BOT_TOKEN")
+    APP_ID = config("APP_ID", "20288183" cast=int)
+    API_HASH = config("API_HASH", "c552d415c8c88ac267891e1d01deaa57")
+    BOT_TOKEN = config("BOT_TOKEN", "5929336845:AAEot0q2AHflpowNzYBO6L1aZ2Gb_Esc_zA")
     DEV = 1322549723
-    OWNER = config("OWNER")
+    OWNER = config("OWNER", "1164918935")
     FFMPEG = config(
         "FFMPEG",
-        default='ffmpeg -i "{}" -preset ultrafast -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{}"',
+        default='ffmpeg -i "{}" -hide_banner -preset veryfast -c:v libx265 -hide_banner -vf scale=1280:-2 -x265-params no-info=1:loglevel=2:bframes=8:range=limited:aq-mode=3:psy-rd=2 -pix_fmt yuv420p10le  -dst_range 1 -colorspace:v bt709 -color_primaries:v bt709 -color_trc:v bt709 -b:v 750k -maxrate 1500k -bufsize 1500k  -r 23.976 -map 0:v -c:a libopus -b:a 64k -ac 2 -vbr on -map 0:a:0 -c:s copy  -map 0:s? -metadata: 'title= Encoded By DaddyCooL' -metadata:s:a: 'title=DaddyCooL' -metadata:s:v: 'title=Encoded By DaddyCooL' "{}"',
     )
     THUMB = config(
-        "THUMBNAIL", default="https://telegra.ph/file/75ee20ec8d8c8bba84f02.jpg"
+        "THUMBNAIL", default="https://telegra.ph/file/cc878234da5eaddafc37f.jpg"
     )
 except Exception as e:
     print("Environment vars Missing")
